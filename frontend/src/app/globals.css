@@ -1,0 +1,262 @@
+@config "../../tailwind.config.js";
+@import "tailwindcss";
+
+:root {
+  --background: #080810;
+  --foreground: #ffffff;
+  --brand-ink: #1E1E1E;
+  --brand-graphite: #50525F;
+  --brand-gold: #EFA12D;
+  --brand-gold-light: #f8c36d;
+  --brand-paper: #F4F1EA;
+  --brand-panel: #101018;
+  --brand-panel-raised: #151522;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background:
+    radial-gradient(circle at 12% 8%, rgba(239, 161, 45, 0.08), transparent 28rem),
+    radial-gradient(circle at 85% 18%, rgba(255, 255, 255, 0.05), transparent 24rem),
+    var(--background);
+  color: var(--foreground);
+  font-family: Inter, Arial, Helvetica, sans-serif;
+  text-rendering: geometricPrecision;
+}
+
+::selection {
+  background: rgba(239, 161, 45, 0.35);
+  color: #ffffff;
+}
+
+button,
+a,
+input,
+textarea,
+select {
+  -webkit-tap-highlight-color: transparent;
+}
+
+:focus-visible {
+  outline: 2px solid rgba(239, 161, 45, 0.7);
+  outline-offset: 3px;
+}
+
+body::-webkit-scrollbar,
+*::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+body::-webkit-scrollbar-track,
+*::-webkit-scrollbar-track {
+  background: #080810;
+}
+
+body::-webkit-scrollbar-thumb,
+*::-webkit-scrollbar-thumb {
+  background: rgba(239, 161, 45, 0.35);
+  border: 2px solid #080810;
+  border-radius: 999px;
+}
+
+.design-panel {
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  background: rgba(16, 16, 24, 0.86);
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.24);
+  backdrop-filter: blur(18px);
+}
+
+.paper-panel {
+  border: 1px solid rgba(30, 30, 30, 0.10);
+  background: rgba(244, 241, 234, 0.94);
+  box-shadow: 0 24px 80px rgba(30, 30, 30, 0.10);
+}
+
+.dashboard-atmosphere {
+  background:
+    linear-gradient(135deg, rgba(239, 161, 45, 0.10), transparent 34rem),
+    radial-gradient(circle at 82% 14%, rgba(244, 241, 234, 0.08), transparent 28rem),
+    radial-gradient(circle at 44% 82%, rgba(80, 82, 95, 0.16), transparent 32rem),
+    #080810;
+}
+
+.dashboard-stage {
+  position: relative;
+}
+
+.dashboard-stage::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(rgba(239, 161, 45, 0.055) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(239, 161, 45, 0.055) 1px, transparent 1px);
+  background-size: 72px 72px;
+  mask-image: linear-gradient(180deg, rgba(0,0,0,0.85), transparent 78%);
+}
+
+.gold-eyebrow {
+  color: var(--brand-gold);
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+}
+
+.home-hero-image {
+  background-image:
+    linear-gradient(90deg, rgba(15, 15, 18, 0.92) 0%, rgba(15, 15, 18, 0.72) 46%, rgba(15, 15, 18, 0.24) 100%),
+    linear-gradient(180deg, rgba(15, 15, 18, 0.18) 0%, rgba(15, 15, 18, 0.92) 100%),
+    url("https://projects.whitewarbler.com/framework/wp-content/uploads/2025/06/image-scaled.png");
+  background-position: center;
+  background-size: cover;
+  animation: home-image-drift 20s ease-in-out infinite alternate;
+}
+
+.project-panel-one {
+  background-image:
+    linear-gradient(180deg, transparent 20%, rgba(0, 0, 0, 0.78) 100%),
+    url("https://projects.whitewarbler.com/framework/wp-content/uploads/2025/06/WhatsApp-Image-2025-06-27-at-11.03.42-AM.jpeg");
+  background-position: center;
+  background-size: cover;
+}
+
+.project-panel-two {
+  background-image:
+    linear-gradient(180deg, transparent 20%, rgba(0, 0, 0, 0.78) 100%),
+    url("https://projects.whitewarbler.com/framework/wp-content/uploads/2025/06/view_3-Photo-1.jpg");
+  background-position: center;
+  background-size: cover;
+}
+
+.blueprint-grid {
+  background-image:
+    linear-gradient(rgba(239, 161, 45, 0.10) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(239, 161, 45, 0.10) 1px, transparent 1px);
+  background-size: 56px 56px;
+  animation: blueprint-pan 28s linear infinite;
+}
+
+.motion-scan {
+  position: absolute;
+  inset-inline: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(239, 161, 45, 0.75), transparent);
+  animation: vertical-scan 6s ease-in-out infinite;
+}
+
+.ticker-track {
+  animation: ticker-slide 24s linear infinite;
+}
+
+@keyframes home-image-drift {
+  0% { background-position: center center; }
+  100% { background-position: 54% 48%; }
+}
+
+@keyframes blueprint-pan {
+  0% { background-position: 0 0; }
+  100% { background-position: 112px 56px; }
+}
+
+@keyframes vertical-scan {
+  0%, 100% { opacity: 0; transform: translateY(15vh); }
+  45%, 65% { opacity: 1; transform: translateY(72vh); }
+}
+
+@keyframes ticker-slide {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.auth-blueprint {
+  background-image:
+    linear-gradient(rgba(239, 161, 45, 0.10) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(239, 161, 45, 0.10) 1px, transparent 1px),
+    radial-gradient(circle at 18% 20%, rgba(239, 161, 45, 0.20), transparent 28%),
+    radial-gradient(circle at 82% 72%, rgba(255, 255, 255, 0.12), transparent 30%);
+  background-size: 44px 44px, 44px 44px, 100% 100%, 100% 100%;
+  animation: auth-grid-drift 22s linear infinite;
+}
+
+.auth-project-image {
+  background-image:
+    linear-gradient(180deg, rgba(30, 30, 30, 0.18) 0%, rgba(30, 30, 30, 0.88) 100%),
+    url("https://projects.whitewarbler.com/framework/wp-content/uploads/2025/06/image-scaled.png");
+  background-position: center;
+  background-size: cover;
+  animation: auth-image-drift 18s ease-in-out infinite alternate;
+}
+
+.auth-line {
+  position: absolute;
+  height: 1px;
+  transform-origin: left;
+  background: linear-gradient(90deg, transparent, rgba(239, 161, 45, 0.9), transparent);
+  animation: auth-line-scan 5.5s ease-in-out infinite;
+}
+
+.auth-float {
+  animation: auth-float 7s ease-in-out infinite;
+}
+
+.auth-float-delay {
+  animation: auth-float 8s ease-in-out infinite 1.2s;
+}
+
+.auth-shimmer {
+  background: linear-gradient(110deg, rgba(255,255,255,0.08), rgba(239,161,45,0.22), rgba(255,255,255,0.08));
+  background-size: 220% 100%;
+  animation: auth-shimmer 4s ease-in-out infinite;
+}
+
+@keyframes auth-grid-drift {
+  0% { background-position: 0 0, 0 0, center, center; }
+  100% { background-position: 88px 44px, 88px 44px, center, center; }
+}
+
+@keyframes auth-image-drift {
+  0% { background-position: center center; transform: scale(1); }
+  100% { background-position: 52% 48%; transform: scale(1.04); }
+}
+
+@keyframes auth-line-scan {
+  0%, 100% { opacity: 0; transform: translateX(-18%) scaleX(0.2); }
+  45%, 60% { opacity: 1; transform: translateX(16%) scaleX(1); }
+}
+
+@keyframes auth-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-14px); }
+}
+
+@keyframes auth-shimmer {
+  0% { background-position: 120% 0; }
+  100% { background-position: -120% 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .auth-blueprint,
+  .auth-project-image,
+  .auth-line,
+  .auth-float,
+  .auth-float-delay,
+  .auth-shimmer,
+  .home-hero-image,
+  .blueprint-grid,
+  .motion-scan,
+  .ticker-track {
+    animation: none;
+  }
+}
