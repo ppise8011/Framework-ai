@@ -21,21 +21,20 @@ export default function ForgotPasswordPage() {
   };
 
   return (
-    <div className="min-h-screen bg-brand-ink flex items-center justify-center px-4 relative overflow-hidden">
+    <div className="relative flex min-h-screen items-center justify-center overflow-hidden bg-brand-ink px-4 py-10">
       <div className="absolute inset-0 auth-blueprint opacity-35" />
-      <div className="absolute right-0 top-1/4 h-64 w-64 rounded-full bg-brand-gold/10 blur-3xl" />
       <div className="auth-line top-[28%] left-0 w-[54%]" />
 
-      <div className="w-full max-w-md relative z-10">
-        <Link href="/login" className="inline-flex items-center gap-2 text-gray-400 hover:text-white text-sm mb-10 transition-colors">
+      <div className="relative z-10 w-full max-w-md">
+        <Link href="/login" className="mb-10 inline-flex items-center gap-2 text-sm text-gray-400 transition-colors hover:text-white">
           <ArrowLeft size={16} />
           Back to login
         </Link>
 
         {!sent ? (
           <>
-            <h1 className="text-3xl font-bold text-white mb-2">Forgot password?</h1>
-            <p className="text-gray-300 mb-8">
+            <h1 className="mb-2 text-3xl font-bold text-white">Forgot password?</h1>
+            <p className="mb-8 text-gray-300">
               Enter your email and we&apos;ll send you a reset link.
             </p>
 
@@ -49,7 +48,7 @@ export default function ForgotPasswordPage() {
                     placeholder="you@example.com"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    className="w-full bg-white/5 border border-white/10 rounded-sm pl-10 pr-4 py-3 text-white placeholder-gray-500 text-sm focus:outline-none focus:border-brand-gold/70 focus:bg-white/[0.07] transition-all"
+                    className="field-surface rounded-sm py-3 pl-10 pr-4 text-sm placeholder-gray-500"
                   />
                 </div>
               </div>
@@ -59,14 +58,14 @@ export default function ForgotPasswordPage() {
             </form>
           </>
         ) : (
-          <div className="text-center py-8">
-            <div className="w-16 h-16 bg-brand-gold/10 rounded-sm border border-brand-gold/25 flex items-center justify-center mx-auto mb-6 auth-shimmer">
+          <div className="py-8 text-center">
+            <div className="auth-shimmer mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-sm border border-brand-gold/25 bg-brand-gold/10">
               <Mail size={28} className="text-brand-gold" />
             </div>
-            <h2 className="text-2xl font-bold text-white mb-3">Check your inbox</h2>
-            <p className="text-gray-300 text-sm mb-8">
+            <h2 className="mb-3 text-2xl font-bold text-white">Check your inbox</h2>
+            <p className="mb-8 text-sm text-gray-300">
               We sent a password reset link to{" "}
-              <span className="text-white font-medium">{email}</span>
+              <span className="font-medium text-white">{email}</span>
             </p>
             <Link href="/login">
               <Button variant="outline" className="border-brand-gold text-brand-gold hover:bg-brand-gold/10">

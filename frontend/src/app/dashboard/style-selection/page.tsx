@@ -6,6 +6,7 @@ import { motion } from "framer-motion";
 import { ArrowLeft, ArrowRight, Check, Crown, Factory, Hotel, Leaf, MountainSnow, Waves } from "lucide-react";
 import { ProjectStepper } from "@/components/generator/ProjectStepper";
 import { Button } from "@/components/ui/Button";
+import { useGeneratorStore } from "@/store/generator.store";
 
 const styles = [
   { id: "modern", label: "Modern", icon: MountainSnow, desc: "Clean lines, neutral tones" },
@@ -20,8 +21,13 @@ const styles = [
 
 export default function StyleSelectionPage() {
   const router = useRouter();
-  const [selected, setSelected] = useState("");
+  const store = useGeneratorStore();
+  const [selected, setSelected] = useState(store.style);
   const selectedStyle = styles.find((s) => s.id === selected);
+  const handleContinue = () => {
+    store.setStyle(selected);
+    router.push("/dashboard/asset-selection");
+  };
 
   return (
     <div className="mx-auto max-w-4xl">
@@ -41,7 +47,7 @@ export default function StyleSelectionPage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: index * 0.04 }}
             onClick={() => setSelected(style.id)}
-            className={`relative rounded-sm border p-5 text-left transition-all ${
+            className={`interactive-lift relative rounded-md border p-5 text-left ${
               selected === style.id
                 ? "border-brand-gold/60 bg-brand-gold/10 shadow-lg shadow-brand-gold/10"
                 : "border-white/10 bg-brand-panel/80 hover:border-brand-gold/30 hover:bg-brand-panel2"
@@ -69,11 +75,11 @@ export default function StyleSelectionPage() {
         </motion.div>
       )}
 
-      <div className="flex gap-3">
-        <Button variant="outline" size="lg" onClick={() => router.back()} className="rounded-sm border-white/15 text-white hover:bg-white/5">
+      <div className="flex flex-col-reverse gap-3 sm:flex-row">
+        <Button variant="outline" size="lg" onClick={() => router.back()} className="rounded-sm border-white/15 text-white hover:bg-white/5 sm:w-auto">
           <ArrowLeft size={16} /> Back
         </Button>
-        <Button variant="brand" size="lg" className="flex-1 rounded-sm uppercase tracking-wide" disabled={!selected} onClick={() => router.push("/dashboard/asset-selection")}>
+        <Button variant="brand" size="lg" className="flex-1 rounded-sm uppercase tracking-wide" disabled={!selected} onClick={handleContinue}>
           Continue to assets <ArrowRight size={18} />
         </Button>
       </div>

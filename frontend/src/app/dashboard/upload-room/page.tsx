@@ -6,6 +6,9 @@ import { motion } from "framer-motion";
 import { ArrowRight, Expand, ImageIcon, Lightbulb, ScanLine, Upload, X } from "lucide-react";
 import { ProjectStepper } from "@/components/generator/ProjectStepper";
 import { Button } from "@/components/ui/Button";
+import { projectService } from "@/services/project.service";
+import { useGeneratorStore } from "@/store/generator.store";
+import toast from "react-hot-toast";
 
 const tips = [
   { icon: Lightbulb, tip: "Good lighting" },
@@ -15,17 +18,42 @@ const tips = [
 
 export default function UploadRoomPage() {
   const router = useRouter();
+  const store = useGeneratorStore();
   const fileRef = useRef<HTMLInputElement>(null);
   const [image, setImage] = useState<string | null>(null);
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [dragging, setDragging] = useState(false);
   const [fileName, setFileName] = useState("");
+  const [uploading, setUploading] = useState(false);
 
   const handleFile = (file: File) => {
     if (!file.type.startsWith("image/")) return;
+    setSelectedFile(file);
     setFileName(file.name);
     const reader = new FileReader();
     reader.onload = (e) => setImage(e.target?.result as string);
     reader.readAsDataURL(file);
+  };
+
+  const handleContinue = async () => {
+    if (!image || !selectedFile) return;
+
+    if (!store.projectId) {
+      toast.error("Please start from Create Project");
+      router.push("/dashboard/create-project");
+      return;
+    }
+
+    setUploading(true);
+    try {
+      const upload = await projectService.uploadRoomImage(store.projectId, selectedFile);
+      store.setUploadedImage(image, upload.url);
+      router.push("/dashboard/room-details");
+    } catch (err) {
+      const message = err instanceof Error ? err.message : "Failed to upload room image";
+      toast.error(message);
+      setUploading(false);
+    }
   };
 
   const onDrop = (e: React.DragEvent) => {
@@ -58,7 +86,7 @@ export default function UploadRoomPage() {
           }}
           onDragLeave={() => setDragging(false)}
           onDrop={onDrop}
-          className={`relative cursor-pointer rounded-sm border-2 border-dashed p-12 text-center transition-all duration-300 sm:p-16 ${
+          className={`interactive-lift relative cursor-pointer rounded-md border-2 border-dashed p-8 text-center sm:p-16 ${
             dragging
               ? "border-brand-gold bg-brand-gold/10"
               : "border-white/10 bg-brand-panel/80 hover:border-brand-gold/45 hover:bg-brand-panel2"
@@ -90,10 +118,11 @@ export default function UploadRoomPage() {
           className="relative overflow-hidden rounded-sm border border-white/10 bg-brand-panel"
         >
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={image} alt="Room" className="max-h-[440px] w-full object-cover" />
+          <img src={image} alt="Room" className="max-h-[320px] w-full object-cover sm:max-h-[440px]" />
           <button
             onClick={() => {
               setImage(null);
+              setSelectedFile(null);
               setFileName("");
             }}
             className="absolute right-4 top-4 flex h-9 w-9 items-center justify-center rounded-sm bg-black/70 text-white transition-all hover:bg-black"
@@ -108,7 +137,7 @@ export default function UploadRoomPage() {
         </motion.div>
       )}
 
-      <div className="my-8 grid grid-cols-3 gap-3">
+      <div className="my-8 grid grid-cols-1 gap-3 sm:grid-cols-3">
         {tips.map((t) => (
           <div key={t.tip} className="rounded-sm border border-white/10 bg-brand-panel/80 p-4 text-center">
             <t.icon size={20} className="mx-auto mb-2 text-brand-gold" />
@@ -122,7 +151,8 @@ export default function UploadRoomPage() {
         size="lg"
         className="w-full rounded-sm uppercase tracking-wide"
         disabled={!image}
-        onClick={() => router.push("/dashboard/room-details")}
+        loading={uploading}
+        onClick={handleContinue}
       >
         Continue to room details
         <ArrowRight size={18} />

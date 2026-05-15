@@ -6,6 +6,7 @@ import { motion } from "framer-motion";
 import { ArrowLeft, ArrowRight, Bath, Bed, Briefcase, ChefHat, DoorOpen, Sofa, Utensils, Baby } from "lucide-react";
 import { ProjectStepper } from "@/components/generator/ProjectStepper";
 import { Button } from "@/components/ui/Button";
+import { useGeneratorStore } from "@/store/generator.store";
 
 const roomTypes = [
   { id: "living", label: "Living Room", icon: Sofa },
@@ -23,12 +24,24 @@ const ceilingTypes = ["Standard", "False Ceiling", "Tray Ceiling", "Vaulted", "C
 
 export default function RoomDetailsPage() {
   const router = useRouter();
-  const [roomType, setRoomType] = useState("");
-  const [floor, setFloor] = useState("");
-  const [ceiling, setCeiling] = useState("");
-  const [measurements, setMeasurements] = useState({ length: "", width: "", height: "" });
+  const store = useGeneratorStore();
+  const [roomType, setRoomType] = useState(store.roomType);
+  const [floor, setFloor] = useState(store.floorType);
+  const [ceiling, setCeiling] = useState(store.ceilingType);
+  const [measurements, setMeasurements] = useState({
+    length: store.length,
+    width: store.width,
+    height: store.height,
+  });
 
   const isValid = roomType && measurements.length && measurements.width;
+  const handleContinue = () => {
+    store.setRoomType(roomType);
+    store.setMeasurements(measurements.length, measurements.width, measurements.height);
+    store.setFloorType(floor);
+    store.setCeilingType(ceiling);
+    router.push("/dashboard/style-selection");
+  };
 
   return (
     <div className="mx-auto max-w-3xl">
@@ -130,11 +143,11 @@ export default function RoomDetailsPage() {
         </motion.section>
       </div>
 
-      <div className="flex gap-3">
-        <Button variant="outline" size="lg" onClick={() => router.back()} className="rounded-sm border-white/15 text-white hover:bg-white/5">
+      <div className="flex flex-col-reverse gap-3 sm:flex-row">
+        <Button variant="outline" size="lg" onClick={() => router.back()} className="rounded-sm border-white/15 text-white hover:bg-white/5 sm:w-auto">
           <ArrowLeft size={16} /> Back
         </Button>
-        <Button variant="brand" size="lg" className="flex-1 rounded-sm uppercase tracking-wide" disabled={!isValid} onClick={() => router.push("/dashboard/style-selection")}>
+        <Button variant="brand" size="lg" className="flex-1 rounded-sm uppercase tracking-wide" disabled={!isValid} onClick={handleContinue}>
           Continue to style <ArrowRight size={18} />
         </Button>
       </div>

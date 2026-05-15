@@ -15,8 +15,8 @@ const accountLinks = [
 
 export function Footer() {
   return (
-    <footer id="contact" className="border-t border-white/10 bg-brand-ink py-14 text-white">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <footer id="contact" className="border-t border-white/10 bg-brand-night py-12 text-white">
+      <div className="landing-container">
         <div className="grid gap-10 md:grid-cols-[1.3fr_0.7fr_0.7fr]">
           <div>
             <div className="mb-5 flex items-center gap-3">
@@ -32,7 +32,7 @@ export function Footer() {
               AI-powered interior design for homeowners, designers, architects,
               and teams turning rooms into clear visual decisions.
             </p>
-            <div className="mt-8 border-l-2 border-brand-gold pl-5">
+            <div className="mt-8 rounded-md border border-white/10 bg-white/[0.03] p-4">
               <p className="text-sm font-semibold text-white">contact@frameworkdesign.com</p>
               <p className="mt-1 text-sm text-gray-400">Pune, Maharashtra</p>
             </div>

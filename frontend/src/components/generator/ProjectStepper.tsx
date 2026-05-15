@@ -14,7 +14,7 @@ export function ProjectStepper({ currentStep }: { currentStep: number }) {
   const progress = ((currentStep - 1) / (steps.length - 1)) * 100;
 
   return (
-    <div className="mb-10 w-full rounded-sm border border-white/10 bg-brand-panel/80 p-5 shadow-2xl shadow-black/20 backdrop-blur">
+    <div className="mb-8 w-full overflow-hidden rounded-md border border-white/10 bg-brand-panel/80 p-4 shadow-2xl shadow-black/20 backdrop-blur sm:mb-10 sm:p-5">
       <div className="relative flex items-start justify-between">
         <div className="absolute left-4 right-4 top-4 h-px bg-white/10" />
         <div

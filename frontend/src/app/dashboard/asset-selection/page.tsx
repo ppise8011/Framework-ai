@@ -6,6 +6,7 @@ import { motion } from "framer-motion";
 import { ArrowLeft, ArrowRight, Check, Lamp, Package, Sparkles, Table2, Warehouse } from "lucide-react";
 import { ProjectStepper } from "@/components/generator/ProjectStepper";
 import { Button } from "@/components/ui/Button";
+import { useGeneratorStore } from "@/store/generator.store";
 
 const assetCategories = [
   {
@@ -34,7 +35,8 @@ const toId = (label: string) => label.toLowerCase().replaceAll(" ", "_");
 
 export default function AssetSelectionPage() {
   const router = useRouter();
-  const [selected, setSelected] = useState<string[]>([]);
+  const store = useGeneratorStore();
+  const [selected, setSelected] = useState<string[]>(store.assets);
 
   const toggle = (id: string) => {
     setSelected((prev) =>
@@ -43,19 +45,32 @@ export default function AssetSelectionPage() {
   };
 
   const allAssets = assetCategories.flatMap((c) => c.assets.map((label) => ({ id: toId(label), label })));
+  const handleGenerate = () => {
+    store.assets.forEach((id) => {
+      if (!selected.includes(id)) {
+        store.toggleAsset(id);
+      }
+    });
+    selected.forEach((id) => {
+      if (!store.assets.includes(id)) {
+        store.toggleAsset(id);
+      }
+    });
+    router.push("/dashboard/ai-generation");
+  };
 
   return (
     <div className="mx-auto max-w-4xl">
       <ProjectStepper currentStep={4} />
 
-      <div className="mb-8 flex items-start justify-between gap-4">
+      <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
         <div>
           <p className="mb-3 text-xs font-bold uppercase tracking-[0.28em] text-brand-gold">Step 4</p>
           <h1 className="text-3xl font-bold text-white">Add furniture and assets</h1>
           <p className="mt-2 text-sm text-gray-400">Choose the items AI should consider in the composition.</p>
         </div>
         {selected.length > 0 && (
-          <div className="shrink-0 rounded-sm border border-brand-gold/20 bg-brand-gold/10 px-4 py-3 text-center">
+          <div className="w-fit shrink-0 rounded-sm border border-brand-gold/20 bg-brand-gold/10 px-4 py-3 text-center">
             <div className="text-xl font-bold leading-none text-brand-gold">{selected.length}</div>
             <div className="mt-1 text-xs text-gray-500">selected</div>
           </div>
@@ -83,7 +98,7 @@ export default function AssetSelectionPage() {
                   <button
                     key={id}
                     onClick={() => toggle(id)}
-                    className={`relative rounded-sm border p-3 text-left text-sm font-medium transition-all ${
+                    className={`interactive-lift relative rounded-sm border p-3 text-left text-sm font-medium ${
                       isSelected
                         ? "border-brand-gold/60 bg-brand-gold/10 text-white"
                         : "border-white/10 bg-white/[0.03] text-gray-400 hover:bg-white/[0.06] hover:text-white"
@@ -123,11 +138,11 @@ export default function AssetSelectionPage() {
         </motion.div>
       )}
 
-      <div className="flex gap-3">
-        <Button variant="outline" size="lg" onClick={() => router.back()} className="rounded-sm border-white/15 text-white hover:bg-white/5">
+      <div className="flex flex-col-reverse gap-3 sm:flex-row">
+        <Button variant="outline" size="lg" onClick={() => router.back()} className="rounded-sm border-white/15 text-white hover:bg-white/5 sm:w-auto">
           <ArrowLeft size={16} /> Back
         </Button>
-        <Button variant="brand" size="lg" className="flex-1 rounded-sm uppercase tracking-wide" onClick={() => router.push("/dashboard/ai-generation")}>
+        <Button variant="brand" size="lg" className="flex-1 rounded-sm uppercase tracking-wide" onClick={handleGenerate}>
           <Sparkles size={18} />
           Generate design
           <ArrowRight size={18} />

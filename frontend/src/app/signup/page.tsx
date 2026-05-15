@@ -4,28 +4,26 @@ import { Sparkles } from "lucide-react";
 
 export default function SignupPage() {
   return (
-    <div className="min-h-screen bg-brand-ink flex items-center justify-center px-4 py-12 relative overflow-hidden">
+    <div className="relative flex min-h-screen items-center justify-center overflow-hidden bg-brand-ink px-4 py-10 sm:py-12">
       <div className="absolute inset-0 auth-blueprint opacity-35" />
-      <div className="absolute -left-16 top-20 h-56 w-56 rounded-full bg-brand-gold/10 blur-3xl" />
-      <div className="absolute -right-20 bottom-20 h-72 w-72 rounded-full bg-white/10 blur-3xl" />
       <div className="auth-line top-[18%] left-0 w-[54%]" />
       <div className="auth-line bottom-[16%] right-0 w-[48%]" />
 
-      <div className="w-full max-w-md relative z-10">
-        <Link href="/" className="flex items-center gap-2 mb-10">
-          <div className="w-8 h-8 bg-brand-gold rounded-sm flex items-center justify-center shadow-lg shadow-brand-gold/25">
-            <span className="text-brand-ink font-bold text-sm">F</span>
+      <div className="relative z-10 w-full max-w-md">
+        <Link href="/" className="mb-8 flex items-center gap-2 sm:mb-10">
+          <div className="flex h-8 w-8 items-center justify-center rounded-sm bg-brand-gold shadow-lg shadow-brand-gold/25">
+            <span className="text-sm font-bold text-brand-ink">F</span>
           </div>
-          <span className="text-white font-bold text-lg tracking-wide">Framework</span>
+          <span className="text-lg font-bold tracking-wide text-white">Framework</span>
         </Link>
 
         <div className="mb-8">
-          <p className="inline-flex items-center gap-2 text-brand-gold text-xs font-semibold uppercase tracking-[0.24em] mb-3">
+          <p className="mb-3 inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.2em] text-brand-gold sm:tracking-[0.24em]">
             <Sparkles size={14} />
             Design workspace
           </p>
-          <h1 className="text-4xl font-bold text-white mb-3 leading-tight">Create your account</h1>
-          <p className="text-gray-300 leading-relaxed">Start designing with AI - free forever</p>
+          <h1 className="mb-3 text-3xl font-bold leading-tight text-white sm:text-4xl">Create your account</h1>
+          <p className="leading-relaxed text-gray-300">Start designing with AI - free forever</p>
         </div>
 
         <SignupForm />

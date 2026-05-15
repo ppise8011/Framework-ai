@@ -38,20 +38,20 @@ const features = [
 
 export function FeaturesSection() {
   return (
-    <section id="features" className="relative overflow-hidden bg-brand-paper py-24 text-brand-ink">
-      <div className="absolute inset-0 blueprint-grid opacity-20" />
+    <section id="features" className="section-y relative overflow-hidden bg-brand-paper text-brand-ink">
+      <div className="absolute inset-0 opacity-[0.18]" />
 
-      <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="mb-14 grid gap-8 lg:grid-cols-[0.8fr_1.2fr]">
+      <div className="landing-container relative z-10">
+        <div className="mb-12 grid gap-6 lg:grid-cols-[0.9fr_1.1fr] lg:items-end">
           <div>
-            <p className="mb-4 text-xs font-bold uppercase tracking-[0.28em] text-accent-dark">
+            <p className="mb-3 text-xs font-bold uppercase tracking-[0.22em] text-accent-dark">
               Everything you need
             </p>
             <motion.h2
               initial={{ opacity: 0, y: 18 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="text-4xl font-bold leading-tight sm:text-5xl"
+              className="max-w-xl text-3xl font-bold leading-tight sm:text-4xl"
             >
               A calmer, faster way to shape interior decisions.
             </motion.h2>
@@ -61,7 +61,7 @@ export function FeaturesSection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.1 }}
-            className="max-w-2xl text-lg leading-relaxed text-brand-graphite"
+            className="max-w-2xl text-base leading-8 text-brand-graphite"
           >
             Framework keeps the messy parts of early design moving: analysis,
             layout options, visual atmosphere, and presentation material in one
@@ -69,7 +69,7 @@ export function FeaturesSection() {
           </motion.p>
         </div>
 
-        <div className="grid gap-px overflow-hidden border border-brand-ink/10 bg-brand-ink/10 md:grid-cols-2 lg:grid-cols-3">
+        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
           {features.map((feature, index) => (
             <motion.div
               key={feature.title}
@@ -77,12 +77,12 @@ export function FeaturesSection() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: index * 0.05 }}
-              className="group bg-brand-paper p-7 transition-colors hover:bg-white"
+              className="interactive-lift group rounded-md border border-brand-ink/10 bg-white/75 p-5 shadow-sm shadow-brand-ink/5 hover:bg-white sm:p-6"
             >
-              <div className="mb-8 flex h-12 w-12 items-center justify-center border border-brand-gold/50 bg-brand-gold/15 text-accent-dark transition-transform group-hover:-translate-y-1">
+              <div className="mb-6 flex h-11 w-11 items-center justify-center rounded-md border border-brand-gold/40 bg-brand-gold/15 text-accent-dark transition-transform group-hover:-translate-y-1">
                 <feature.icon size={22} />
               </div>
-              <h3 className="mb-3 text-xl font-bold">{feature.title}</h3>
+              <h3 className="mb-3 text-lg font-bold">{feature.title}</h3>
               <p className="text-sm leading-relaxed text-brand-graphite">{feature.description}</p>
             </motion.div>
           ))}

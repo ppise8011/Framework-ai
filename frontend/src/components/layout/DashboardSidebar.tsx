@@ -42,8 +42,8 @@ export function DashboardSidebar() {
     <>
       <aside
         className={cn(
-          "fixed left-0 top-0 z-40 hidden h-full flex-col border-r border-white/10 bg-brand-panel/95 shadow-2xl shadow-black/30 backdrop-blur-xl transition-all duration-300 lg:flex",
-          collapsed ? "w-20" : "w-64"
+          "fixed left-0 top-0 z-40 hidden h-full flex-col border-r border-white/10 bg-brand-night/90 shadow-2xl shadow-black/30 backdrop-blur-xl transition-all duration-300 lg:flex",
+          "w-[280px]"
         )}
       >
         <div className="flex h-16 shrink-0 items-center justify-between border-b border-white/10 px-4">
@@ -81,7 +81,7 @@ export function DashboardSidebar() {
                 key={item.href}
                 href={item.href}
                 className={cn(
-                  "group flex items-center gap-3 rounded-sm px-3 py-3 text-sm font-medium transition-all",
+              "group flex items-center gap-3 rounded-md px-3 py-2.5 text-sm font-medium transition-all",
                   collapsed && "justify-center px-2",
                   item.highlight && !isActive
                     ? "bg-brand-gold text-brand-ink shadow-lg shadow-brand-gold/15 hover:bg-brand-gold-light"
@@ -109,7 +109,7 @@ export function DashboardSidebar() {
         </nav>
 
         {!collapsed && (
-          <div className="mx-3 mb-3 rounded-sm border border-brand-gold/20 bg-brand-gold/10 p-4">
+          <div className="mx-3 mb-3 rounded-md border border-brand-gold/20 bg-brand-gold/10 p-4">
             <div className="mb-3 flex items-center justify-between">
               <span className="text-xs font-medium text-gray-400">AI Credits</span>
               <span className="text-xs font-bold text-brand-gold">3 / 3</span>
@@ -134,7 +134,7 @@ export function DashboardSidebar() {
                 key={item.href}
                 href={item.href}
                 className={cn(
-                  "flex items-center gap-3 rounded-sm px-3 py-2.5 text-sm font-medium transition-all",
+                  "flex items-center gap-3 rounded-md px-3 py-2.5 text-sm font-medium transition-all",
                   collapsed && "justify-center px-2",
                   isActive ? "bg-brand-gold/10 text-white" : "text-gray-500 hover:bg-white/5 hover:text-white"
                 )}
@@ -148,7 +148,7 @@ export function DashboardSidebar() {
 
           <button
             className={cn(
-              "flex w-full items-center gap-3 rounded-sm px-3 py-2.5 text-sm font-medium text-gray-500 transition-all hover:bg-red-500/5 hover:text-red-400",
+              "flex w-full items-center gap-3 rounded-md px-3 py-2.5 text-sm font-medium text-gray-500 transition-all hover:bg-red-500/5 hover:text-red-400",
               collapsed && "justify-center px-2"
             )}
           >

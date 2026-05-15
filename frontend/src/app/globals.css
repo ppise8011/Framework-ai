@@ -21,6 +21,7 @@
 
 html {
   scroll-behavior: smooth;
+  overflow-x: hidden;
 }
 
 body {
@@ -31,6 +32,7 @@ body {
   color: var(--foreground);
   font-family: Inter, Arial, Helvetica, sans-serif;
   text-rendering: geometricPrecision;
+  overflow-x: hidden;
 }
 
 ::selection {
@@ -44,6 +46,18 @@ input,
 textarea,
 select {
   -webkit-tap-highlight-color: transparent;
+}
+
+button,
+a {
+  touch-action: manipulation;
+}
+
+img,
+svg,
+video,
+canvas {
+  max-width: 100%;
 }
 
 :focus-visible {
@@ -74,6 +88,55 @@ body::-webkit-scrollbar-thumb,
   background: rgba(16, 16, 24, 0.86);
   box-shadow: 0 24px 80px rgba(0, 0, 0, 0.24);
   backdrop-filter: blur(18px);
+}
+
+.surface-card {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  background: rgba(16, 16, 24, 0.82);
+  box-shadow: 0 20px 70px rgba(0, 0, 0, 0.18);
+  backdrop-filter: blur(18px);
+}
+
+.surface-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.08), transparent 34%);
+  opacity: 0.55;
+}
+
+.interactive-lift {
+  transition:
+    transform 180ms ease,
+    border-color 180ms ease,
+    background-color 180ms ease,
+    box-shadow 180ms ease;
+}
+
+.interactive-lift:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 18px 48px rgba(0, 0, 0, 0.22);
+}
+
+.field-surface {
+  width: 100%;
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  background: rgba(255, 255, 255, 0.05);
+  color: #ffffff;
+  outline: none;
+  transition:
+    border-color 160ms ease,
+    background-color 160ms ease,
+    box-shadow 160ms ease;
+}
+
+.field-surface:focus {
+  border-color: rgba(239, 161, 45, 0.65);
+  background: rgba(255, 255, 255, 0.075);
+  box-shadow: 0 0 0 4px rgba(239, 161, 45, 0.10);
 }
 
 .paper-panel {
@@ -112,6 +175,58 @@ body::-webkit-scrollbar-thumb,
   font-weight: 800;
   letter-spacing: 0.28em;
   text-transform: uppercase;
+}
+
+.landing-container {
+  width: min(calc(100% - 2rem), 80rem);
+  margin-inline: auto;
+}
+
+.dashboard-main-shell {
+  position: relative;
+  min-width: 0;
+}
+
+.dashboard-content {
+  width: min(100%, 82rem);
+  margin-inline: auto;
+}
+
+.dashboard-page-stack {
+  width: min(100%, 82rem);
+  margin-inline: auto;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(1.25rem, 2vw, 2rem);
+}
+
+.page-title {
+  font-size: clamp(1.875rem, 4vw, 3rem);
+  line-height: 1.08;
+  font-weight: 800;
+  letter-spacing: 0;
+}
+
+.section-y {
+  padding-block: clamp(4rem, 7vw, 6rem);
+}
+
+@media (min-width: 1024px) {
+  .dashboard-main-shell {
+    margin-left: 280px;
+    width: calc(100% - 280px);
+  }
+}
+
+@media (max-width: 640px) {
+  .landing-container {
+    width: min(calc(100% - 1rem), 80rem);
+  }
+
+  .gold-eyebrow {
+    font-size: 0.68rem;
+    letter-spacing: 0.18em;
+  }
 }
 
 .home-hero-image {
@@ -258,5 +373,11 @@ body::-webkit-scrollbar-thumb,
   .motion-scan,
   .ticker-track {
     animation: none;
+  }
+
+  .interactive-lift,
+  .interactive-lift:hover {
+    transform: none;
+    transition: none;
   }
 }

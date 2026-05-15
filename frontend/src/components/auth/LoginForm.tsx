@@ -1,13 +1,17 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { Eye, EyeOff, Mail, Lock } from "lucide-react";
+import toast from "react-hot-toast";
 import { Button } from "@/components/ui/Button";
+import { useAuthStore } from "@/store/auth.store";
 
 export function LoginForm() {
+  const router = useRouter();
+  const { login, isLoading } = useAuthStore();
   const [showPassword, setShowPassword] = useState(false);
-  const [loading, setLoading] = useState(false);
   const [form, setForm] = useState({ email: "", password: "" });
   const [error, setError] = useState("");
 
@@ -18,17 +22,21 @@ export function LoginForm() {
       setError("Please fill in all fields");
       return;
     }
-    setLoading(true);
-    setTimeout(() => {
-      setLoading(false);
-    }, 1500);
+    try {
+      await login(form.email, form.password);
+      toast.success("Welcome back");
+      router.push("/dashboard");
+    } catch (err) {
+      const message = err instanceof Error ? err.message : "Login failed. Please try again.";
+      setError(message);
+    }
   };
 
   return (
     <div className="space-y-4">
       <button
         type="button"
-        className="w-full flex items-center justify-center gap-3 bg-white/5 hover:bg-white/10 border border-white/10 rounded-sm py-3 text-white text-sm font-medium transition-all hover:-translate-y-0.5"
+        className="interactive-lift flex w-full items-center justify-center gap-3 rounded-sm border border-white/10 bg-white/5 py-3 text-sm font-medium text-white hover:bg-white/10"
       >
         <svg width="18" height="18" viewBox="0 0 18 18">
           <path fill="#4285F4" d="M16.51 8H8.98v3h4.3c-.18 1-.74 1.48-1.6 2.04v2.01h2.6a7.8 7.8 0 0 0 2.38-5.88c0-.57-.05-.66-.15-1.18z" />
@@ -64,7 +72,7 @@ export function LoginForm() {
               placeholder="you@example.com"
               value={form.email}
               onChange={(e) => setForm({ ...form, email: e.target.value })}
-              className="w-full bg-white/5 border border-white/10 rounded-sm pl-10 pr-4 py-3 text-white placeholder-gray-500 text-sm focus:outline-none focus:border-brand-gold/70 focus:bg-white/[0.07] transition-all"
+                  className="field-surface rounded-sm py-3 pl-10 pr-4 text-sm placeholder-gray-500"
             />
           </div>
         </div>
@@ -83,7 +91,7 @@ export function LoginForm() {
               placeholder="Enter your password"
               value={form.password}
               onChange={(e) => setForm({ ...form, password: e.target.value })}
-              className="w-full bg-white/5 border border-white/10 rounded-sm pl-10 pr-10 py-3 text-white placeholder-gray-500 text-sm focus:outline-none focus:border-brand-gold/70 focus:bg-white/[0.07] transition-all"
+              className="field-surface rounded-sm py-3 pl-10 pr-10 text-sm placeholder-gray-500"
             />
             <button
               type="button"
@@ -96,7 +104,7 @@ export function LoginForm() {
           </div>
         </div>
 
-        <Button type="submit" variant="brand" className="w-full rounded-sm uppercase tracking-wide" size="lg" loading={loading}>
+        <Button type="submit" variant="brand" className="w-full rounded-sm uppercase tracking-wide" size="lg" loading={isLoading}>
           Sign In
         </Button>
       </form>
